@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+</head>
+<body>
+<h1>废话生成器</h1>
+<div></div>
+<button id="generaterBtn">生成</button>
+<script>
+
+
+let result = '';
+let btn = document.querySelector("#generaterBtn");
+btn.onclick = function(){
+    const DicMap = {
+        // 二字都动词
+        v:['皮实','复盘','赋能'],
+        // 二字都名词
+        n2:['漏斗','中台','闭环'],
+        // 三字都名词
+        n3:['新生态','感知度','颗粒度','方法论'],
+        // 四字都名词
+        n4:['底层逻辑','顶层设计','交付价值','生命周期','价值转化','强化认知','资源倾斜','完善逻辑'],
+    }
+
+    // 张一鸣模板
+    const sentence = '{n4}是{v}{n4},{v}行业{n3}。{n4}是{v}{n2}{n4},通过{n3}和{n3}达到{n3}。{n4}是在{n4}采用{n2}打法达成{n4},{n4}作为{n2}的评判标椎';
+    // 简单的洗牌算法
+    Object.values(DicMap).forEach(dicItemList => dicItemList.sort(() => Math.random() - 0.5));
+    // 然后使用正则定位到占位符，并填充
+    result = sentence.replaceAll(/{(\w+)}/g,(str,type) => DicMap[type].shift());
+    console.log(result);
+    document.querySelector("div").innerText = result;
+}
+
+
+</script>
+</body>
+</html>
